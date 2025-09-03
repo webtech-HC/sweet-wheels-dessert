@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweet Wheels — Desserts on the Go!</title>
+
+  <!-- Meta (SEO/social) -->
+  <meta name="description" content="Small-batch scoops, swirls, and sundaes from our pastel truck. Book us for parties or catch us on today’s route.">
+  <meta property="og:title" content="Sweet Wheels — Desserts on the Go!">
+  <meta property="og:description" content="Spin to win a sweet deal, view the menu, and find today’s route.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://placehold.co/1200x630/png?text=Sweet+Wheels">
+  <meta name="theme-color" content="#ffe3ef">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --pink:#ffe3ef; --mint:#dffcf6; --lemon:#fff1cc; --sky:#e4f4ff; --lilac:#efe6ff;
+      --ink:#273049; --muted:#5d6b86; --subtle:#7a87a0;
+      --ctaStart:#ffb8d6; --ctaEnd:#c9b6ff; --cta-ink:#1a2340;
+      --card:#ffffffee; --card-brd:#00000012; --white:#fff;
+      --shadow:0 14px 38px rgba(24,33,56,.14);
+      --radius:24px; --radius-lg:28px; --ring:0 0 0 3px rgba(169,139,255,.28);
+      --container:1140px;
+      /* spinner */
+      --spinSize:min(60vmin, 380px);
+      --hub:104px;
+      --spinDuration:3400ms;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial;color:var(--ink);}
+    /* Fixed pastel background layers */
+    body::before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(180deg,var(--pink),var(--mint) 35%,var(--sky) 70%,var(--lilac));}
+    body::after{content:"";position:fixed;inset:-10% -5% auto -5%;height:70vh;z-index:-1;background:radial-gradient(ellipse at 20% 20%, rgba(255,218,236,.7), transparent 55%), radial-gradient(ellipse at 80% 30%, rgba(201,182,255,.55), transparent 50%), radial-gradient(ellipse at 50% 75%, rgba(223,252,246,.6), transparent 50%);}
+
+    a{color:inherit}
+    .container{max-width:var(--container);margin:0 auto;padding:clamp(16px,3vw,28px)}
+    .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+    header.nav{position:sticky;top:0;background:linear-gradient(180deg,rgba(255,255,255,.8),rgba(255,255,255,.6));backdrop-filter:blur(8px);border-bottom:1px solid #00000010;z-index:40}
+    .nav-bar{display:flex;align-items:center;gap:16px}
+    .brand{font-family:Pacifico,cursive;font-size:clamp(26px,4.5vw,46px);color:#ff7fb5;display:flex;align-items:center;gap:10px}
+    .links{margin-left:auto;display:flex;gap:16px;list-style:none;padding:0}
+    .links a{text-decoration:none;font-weight:600;opacity:.85}
+    .links a:hover{opacity:1}
+    .pill{background:#fff;border:1px solid var(--card-brd);border-radius:999px;padding:8px 12px}
+
+    .hero{display:grid;gap:28px;grid-template-columns:1fr;justify-items:center;text-align:center}
+    .hero .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:linear-gradient(90deg,#fff,var(--lilac));border:1px solid var(--card-brd);border-radius:999px;box-shadow:var(--shadow)}
+    .hero h1{font-size:clamp(36px,6.5vw,72px);line-height:1.02;margin:.35rem 0 .45rem;letter-spacing:-.02em}
+    .lead{color:var(--muted);max-width:68ch;margin:0 auto}
+    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:999px;border:1px solid var(--card-brd);box-shadow:var(--shadow);text-decoration:none;font-weight:800}
+    .btn-cta{background:linear-gradient(90deg,var(--ctaStart),var(--ctaEnd));color:var(--cta-ink)}
+    .btn-ghost{background:#fff;color:#23314c}
+
+    .hero-card{margin-top:22px;background:var(--card);border:1px solid var(--card-brd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding: clamp(16px,3vw,24px)}
+    .hero-grid{display:grid;gap:16px;grid-template-columns:1.2fr 1fr;align-items:center}
+    @media (max-width:980px){.hero-grid{grid-template-columns:1fr}}
+    .hero-photo{border-radius:16px;overflow:hidden;border:1px solid var(--card-brd)}
+    .hero-photo img{width:100%;height:auto;display:block}
+
+    .scallop{--h:22px;height:var(--h);background:radial-gradient(circle at 12px -8px, transparent 13px, #fff 14px) repeat-x;background-size:24px var(--h)}
+
+    .value{background:#fff;border:1px solid var(--card-brd);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:18px;margin-top:28px}
+    .value-grid{display:grid;gap:14px;grid-template-columns:repeat(3,1fr)}
+    @media (max-width:900px){.value-grid{grid-template-columns:1fr}}
+    .v{border:1px solid var(--card-brd);border-radius:18px;padding:16px;display:grid;gap:8px;background:linear-gradient(180deg,var(--lemon),#fff)}
+
+    .menu{margin-top:40px}
+    .menu h2{text-align:center;margin:0 0 12px}
+    .menu-grid{display:grid;gap:14px;grid-template-columns:2fr 1fr 1fr}
+    @media (max-width:1000px){.menu-grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:640px){.menu-grid{grid-template-columns:1fr}}
+    .tile{background:#fff;border:1px solid var(--card-brd);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+    .tile img{width:100%;height:auto;display:block}
+    .tile .info{padding:12px}
+
+    .promo-banner{margin-top:44px;background:linear-gradient(90deg,var(--ctaStart),var(--ctaEnd));color:var(--cta-ink);border:1px solid var(--card-brd);border-radius:999px;box-shadow:var(--shadow);display:flex;gap:14px;align-items:center;justify-content:center;padding:14px 18px}
+
+    /* DISCOUNT WHEEL */
+    .spin{margin-top:44px}
+    .spin h2{text-align:center;margin:0 0 14px}
+    .spin-grid{display:grid;gap:18px;grid-template-columns:1.1fr 1fr;align-items:center}
+    @media (max-width:980px){.spin-grid{grid-template-columns:1fr}}
+    .spin-copy{background:#fff;border:1px solid var(--card-brd);border-radius:18px;box-shadow:var(--shadow);padding:16px}
+
+    .wheel-wrap{position:relative;display:grid;place-items:center;gap:10px}
+    .fa-pointer{position:absolute;top:-16px;left:50%;transform:translateX(-50%);z-index:5;color:#273049;filter:drop-shadow(0 3px 2px rgba(0,0,0,.15))}
+    .fa-pointer i{font-size:34px}
+
+    .wheel{position:relative;width:var(--spinSize);height:var(--spinSize)}
+    .rotor{position:absolute;inset:0;border-radius:50%;border:10px solid #fff;box-shadow:var(--shadow);overflow:hidden}
+    .disc{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#ffd38f 0 45deg,#a3e6ff 45deg 90deg,#ff9ac8 90deg 135deg,#a98bff 135deg 180deg,#ffd38f 180deg 225deg,#a3e6ff 225deg 270deg,#ff9ac8 270deg 315deg,#a98bff 315deg 360deg)}
+    .labels{position:absolute;inset:0;pointer-events:none}
+    .labels li{position:absolute;left:50%;top:50%;list-style:none}
+    .labels li span{display:inline-block;background:#ffffffbf;border:1px solid var(--card-brd);border-radius:999px;padding:4px 8px;font-weight:700;color:#243047;white-space:nowrap}
+    .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:var(--hub);height:var(--hub);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 30% 30%,#fff,#f0f0f0);border:1px solid var(--card-brd);box-shadow:var(--shadow)}
+    .hub button{appearance:none;border:0;background:none;font-weight:800;letter-spacing:.06em;cursor:pointer}
+    .hub button:focus{outline:none;box-shadow:0 0 0 3px rgba(169,139,255,.3);border-radius:999px}
+    .result{text-align:center;font-weight:800;color:#23314c}
+
+    .map-contact{margin-top:40px;display:grid;gap:16px;grid-template-columns:1.3fr 1fr}
+    @media (max-width:980px){.map-contact{grid-template-columns:1fr}}
+    .card{background:#fff;border:1px solid var(--card-brd);border-radius:18px;box-shadow:var(--shadow);padding:14px}
+    .map-card img{width:100%;border-radius:12px;border:1px solid var(--card-brd)}
+
+    .faq{margin-top:44px;display:grid;gap:12px}
+    details{background:#fff;border:1px solid var(--card-brd);border-radius:14px;box-shadow:var(--shadow);padding:12px}
+    summary{cursor:pointer;font-weight:700}
+
+    footer{margin-top:56px;padding:24px 0;border-top:1px solid #0000000f;background:#ffffffcc;text-align:center}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <div class="container nav-bar">
+      <div class="brand"><i class="fa-solid fa-ice-cream" aria-hidden="true"></i> Sweet Wheels</div>
+      <ul class="links">
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#contact">Book us</a></li>
+        <li><a class="pill" href="#spin"><i class="fa-solid fa-gift"></i> Spin to Win</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="eyebrow"><i class="fa-solid fa-star" aria-hidden="true"></i> Pastel-perfect treats</div>
+      <h1>Sweet Wheels — Desserts on the Go!</h1>
+      <p class="lead">Small-batch scoops, swirls, and sundaes from our pastel truck. Book us for parties or catch us on today’s route.</p>
+      <div class="hero-cta">
+        <a class="btn btn-cta" href="#menu"><i class="fa-solid fa-book-open"></i> View Menu</a>
+        <a class="btn btn-ghost" href="#contact"><i class="fa-solid fa-envelope"></i> Book an Event</a>
+      </div>
+      <div class="hero-card">
+        <div class="hero-grid">
+          <div class="hero-photo"><img src="https://placehold.co/1440x960@2x?text=Pastel+Hero+Photo" alt="Placeholder: pastel ice cream hero" loading="lazy"></div>
+          <div>
+            <h3>Why everyone loves Sweet Wheels</h3>
+            <ul>
+              <li>Fresh, local ingredients — small-batch flavors</li>
+              <li>We come to you — neighborhoods, offices, events</li>
+              <li>Kids, vegan, and gluten-free friendly options</li>
+            </ul>
+            <p class="subtle">Knoxville • Sevier • Surrounding areas</p>
+            <a class="btn btn-cta" href="#contact"><i class="fa-solid fa-calendar-check"></i> Check Availability</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="scallop" aria-hidden="true"></div>
+
+    <!-- VALUE GRID -->
+    <section class="value" aria-label="What we serve">
+      <div class="value-grid">
+        <div class="v"><i class="fa-solid fa-ice-cream"></i><h3>Scoops & Swirls</h3><p>Classic flavors plus seasonal specials.</p></div>
+        <div class="v"><i class="fa-solid fa-martini-glass-citrus"></i><h3>Shakes & Floats</h3><p>Thick shakes, old-fashioned floats.</p></div>
+        <div class="v"><i class="fa-solid fa-bowl-food"></i><h3>Sundaes & Splits</h3><p>All the toppings you love.</p></div>
+      </div>
+    </section>
+
+    <!-- DISCOUNT WHEEL -->
+    <section class="spin" id="spin" aria-labelledby="spin-title">
+      <h2 id="spin-title">Spin to Win a Sweet Deal</h2>
+      <div class="spin-grid">
+        <div class="wheel-wrap" aria-live="polite">
+          <!-- Top pointer outside -->
+          <div class="fa-pointer" aria-hidden="true"><i class="fa-solid fa-caret-down"></i></div>
+
+          <div class="wheel" role="img" aria-label="Discount wheel with eight slices; pointer at top indicates result.">
+            <div class="rotor">
+              <div class="disc" aria-hidden="true"></div>
+              <ul class="labels" aria-hidden="true">
+                <li><span>10% Off</span></li>
+                <li><span>Free Topping</span></li>
+                <li><span>Try Again</span></li>
+                <li><span>15% Off</span></li>
+                <li><span>Free Drink</span></li>
+                <li><span>5% Off</span></li>
+                <li><span>BOGO 50%</span></li>
+                <li><span>20% Off</span></li>
+              </ul>
+            </div>
+            <div class="hub"><button type="button" class="spin-btn">SPIN</button></div>
+          </div>
+          <div class="result" id="spin-result" aria-atomic="true"></div>
+        </div>
+
+        <div class="spin-copy">
+          <h3>How it works</h3>
+          <ol>
+            <li>Tap <strong>SPIN</strong> — the wheel will settle under the pointer.</li>
+            <li>Show your winning message at checkout.</li>
+            <li>Enjoy your dessert! 🎉</li>
+          </ol>
+          <p class="subtle">One spin per guest per visit. Select items only. Not combinable with other offers.</p>
+          <a class="btn btn-ghost" href="#menu"><i class="fa-solid fa-book-open"></i> See Menu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- MENU -->
+    <section id="menu" class="menu" aria-labelledby="menu-title">
+      <h2 id="menu-title">Menu Highlights</h2>
+      <div class="menu-grid">
+        <article class="tile" style="grid-row:span 2"><img src="https://placehold.co/900x1200@2x?text=Sundae" alt="Placeholder sundae" loading="lazy"><div class="info"><strong>Signature Sundae</strong><br><span class="subtle">Hot fudge • Nuts • Cherry</span></div></article>
+        <article class="tile"><img src="https://placehold.co/900x600@2x?text=Milkshake" alt="Placeholder milkshake" loading="lazy"><div class="info"><strong>Thick Milkshake</strong><br><span class="subtle">Chocolate • Strawberry • Vanilla</span></div></article>
+        <article class="tile"><img src="https://placehold.co/900x600@2x?text=Banana+Split" alt="Placeholder banana split" loading="lazy"><div class="info"><strong>Banana Split</strong><br><span class="subtle">Three scoops • Two sauces</span></div></article>
+        <article class="tile"><img src="https://placehold.co/900x600@2x?text=Sorbet" alt="Placeholder sorbet" loading="lazy"><div class="info"><strong>Seasonal Sorbet</strong><br><span class="subtle">Vegan • Dairy-free</span></div></article>
+      </div>
+    </section>
+
+    <!-- MAP + CONTACT -->
+    <section id="map" class="map-contact" aria-label="Find us & book">
+      <div class="card map-card">
+        <h3>Today’s Route</h3>
+        <img src="https://placehold.co/1280x800@2x?text=Map+Preview" alt="Placeholder route map">
+        <p class="subtle">Follow us on Instagram Stories for live updates.</p>
+        <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=Sweet%20Wheels%20Ice%20Cream" target="_blank" rel="noopener"><i class="fa-solid fa-map"></i> Open in Maps</a>
+      </div>
+      <div class="card" id="contact">
+        <h3>Book the Truck</h3>
+        <form aria-label="Event booking inquiry">
+          <div class="row">
+            <input type="text" name="name" placeholder="Your name" aria-label="Your name">
+            <input type="email" name="email" placeholder="Email" aria-label="Email">
+            <input type="text" name="date" placeholder="Preferred date" aria-label="Preferred date">
+            <textarea rows="4" name="details" placeholder="Tell us about your event (location, guests, notes)" aria-label="Event details"></textarea>
+            <button class="btn btn-cta submit" type="submit"><i class="fa-solid fa-paper-plane"></i> Send Inquiry</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">FAQ</h2>
+      <details><summary>Where will you be today?</summary><p>Check our Instagram Stories or tap <em>Today’s Route</em> above for today’s stop.</p></details>
+      <details><summary>Do you cater events?</summary><p>Yes! Birthdays, school events, weddings & corporate. Minimums apply — email us.</p></details>
+      <details><summary>Do you have dairy-free options?</summary><p>We rotate a seasonal vegan sorbet and at least one dairy-free scoop.</p></details>
+    </section>
+  </main>
+
+  <footer class="container">
+    <p><strong>Sweet Wheels</strong> · Knoxville, TN · <a href="mailto:hello@sweetwheels.example">hello@sweetwheels.example</a></p>
+  </footer>
+
+  <script>
+  (function(){
+    const scope = document.querySelector('.spin');
+    const wheel = scope.querySelector('.wheel');
+    const rotor = scope.querySelector('.rotor');
+    const labels = scope.querySelectorAll('.labels li');
+    const btn = scope.querySelector('.spin-btn');
+    const resultEl = scope.querySelector('#spin-result');
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const slices = [
+      { label: '10% Off', type: 'win', weight: 18 },
+      { label: 'Free Topping', type: 'win', weight: 13 },
+      { label: 'Try Again', type: 'lose', weight: 14 },
+      { label: '15% Off', type: 'win', weight: 12 },
+      { label: 'Free Drink', type: 'win', weight: 8 },
+      { label: '5% Off', type: 'win', weight: 20 },
+      { label: 'BOGO 50%', type: 'win', weight: 7 },
+      { label: '20% Off', type: 'win', weight: 8 }
+    ];
+    const N = slices.length; const sliceSize = 360 / N; const POINTER_CSS = 270; // TOP (caret-down)
+
+    function placeLabels(){
+      const w = wheel.clientWidth, h = wheel.clientHeight; const r = Math.min(w,h)/2 - 30;
+      labels.forEach((li,i)=>{
+        const centerDeg=(i*sliceSize)+(sliceSize/2);
+        const rad=(centerDeg-90)*Math.PI/180;
+        const x=(w/2)+Math.cos(rad)*r; const y=(h/2)+Math.sin(rad)*r;
+        li.style.left=x+'px'; li.style.top=y+'px';
+        li.firstElementChild.style.transform='translate(-50%,-50%)';
+      });
+    }
+    placeLabels(); window.addEventListener('resize', placeLabels);
+
+    function pickWeighted(arr){ const total=arr.reduce((s,a)=>s+(a.weight||1),0); let r=Math.random()*total; for(let i=0;i<arr.length;i++){ r-=(arr[i].weight||1); if(r<=0) return i; } return arr.length-1; }
+
+    let rotation = 0, spinning=false;
+    function centerAngle(i){ return (i*sliceSize)+(sliceSize/2); }
+
+    function spin(){
+      if(spinning) return; spinning=true; btn.setAttribute('disabled','true');
+      const choice = prefersReduced ? pickWeighted(slices.filter(s=>s.type==='win')) : pickWeighted(slices);
+      const chosenIndex = !prefersReduced ? choice : slices.map((s,i)=> s.type==='win'?i:null).filter(i=>i!==null)[choice];
+
+      const current=((rotation%360)+360)%360; const targetCenter=centerAngle(chosenIndex);
+      let delta=(POINTER_CSS - targetCenter - current)%360; if(delta<0) delta+=360;
+      const turns = prefersReduced?1:5; const add = 360*turns + delta; rotation += add;
+
+      rotor.style.transition = `transform var(--spinDuration) cubic-bezier(.18,.72,.12,1)`;
+      rotor.style.transform = `rotate(${rotation}deg)`;
+
+      const ms = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--spinDuration'))||1600;
+      window.setTimeout(()=>{
+        const prize = slices[chosenIndex];
+        const msg = (prize.type==='lose')? `No luck — ${prize.label}.` : `You won: ${prize.label}!`;
+        resultEl.textContent = msg; btn.removeAttribute('disabled'); spinning=false;
+      }, ms+40);
+    }
+
+    btn.addEventListener('click', spin);
+  })();
+  </script>
+</body>
+</html>
